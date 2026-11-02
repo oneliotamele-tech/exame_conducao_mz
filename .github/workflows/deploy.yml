@@ -4,7 +4,16 @@ on:
   push:
     branches: [ main ]
 
-permissions:
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # Apaga as 3 linhas abaixo:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4:
   contents: read
   pages: write
   id-token: write
