@@ -4,16 +4,7 @@ on:
   push:
     branches: [ main ]
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    # Apaga as 3 linhas abaixo:
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4:
+permissions:
   contents: read
   pages: write
   id-token: write
@@ -27,8 +18,7 @@ jobs:
         with:
           channel: stable
       - run: flutter pub get
-      # O base-href é CRUCIAL e deve ser o nome do teu repositório
-      - run: flutter build web --release --base-href /carta_conducao_mz/
+      - run: flutter build web --release --base-href /exame_conducao_mz/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
@@ -36,10 +26,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        # teste
